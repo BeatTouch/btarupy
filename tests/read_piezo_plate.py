@@ -25,10 +25,13 @@ def punch():
 
 # Blink the LED
 while True:
-    print(piezo_plate_input.read())
+    piezo_plate_input.read()
     time.sleep(0.1)
+
     if(piezo_plate_input.read() > 0.0):
+        print(piezo_plate_input.read())
         led_pin.write(1)
-        time.sleep(0.4)
+        punch()
+        time.sleep(0.1)
         led_pin.write(0)
 
