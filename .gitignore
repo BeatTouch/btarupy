@@ -1,4 +1,4 @@
-beattouchenv/
+btenv/
 .git/
 .vscode/
 __pycache__

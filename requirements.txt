@@ -1,2 +1,2 @@
-pySerial
 playsound
+pyfirmata
