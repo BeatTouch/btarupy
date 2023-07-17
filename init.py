@@ -9,7 +9,7 @@ board = Arduino(port)
 print("Communication Successfully started")
 
 # Set up the pin modes
-led_pin = board.get_pin('d:9:o')
+led_pin = board.digital[8]
 
 # Blink the LED
 while True:
