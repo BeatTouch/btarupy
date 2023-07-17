@@ -1,0 +1,4 @@
+serial
+pytourch
+tkinter
+playsound
