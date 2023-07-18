@@ -20,7 +20,7 @@ piezo_plate_input.enable_reporting()
 
 #Play a sound function
 def punch():
-    playsound('sounds/orchestral-cymbals.mp3')
+    playsound('sounds/punch.mp3')
     print('playing punch sound')
 
 # Blink the LED
