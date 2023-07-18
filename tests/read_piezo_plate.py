@@ -12,26 +12,41 @@ it = util.Iterator(board)
 it.start()  
 
 # Set up the pin modes
-led_pin = board.digital[9]
-piezo_plate_input = board.get_pin('a:3:i') 
+led_pin1 = board.digital[8]
+led_pin2 = board.digital[11]
 
-piezo_plate_input.mode = INPUT
-piezo_plate_input.enable_reporting()
+piezo_plate_1_input = board.get_pin('a:1:i') 
+piezo_plate_2_input = board.get_pin('a:4:i') 
+
+piezo_plate_1_input.mode = INPUT
+piezo_plate_2_input.mode = INPUT
+
+piezo_plate_1_input.enable_reporting()
+piezo_plate_2_input.enable_reporting()
 
 #Play a sound function
 def punch():
     playsound('sounds/punch.mp3')
     print('playing punch sound')
 
+
+piezo_plate_1_input.read()
+piezo_plate_2_input.read()
+time.sleep(0.1)
+
 # Blink the LED
 while True:
-    piezo_plate_input.read()
-    time.sleep(0.1)
-
-    if(piezo_plate_input.read() > 0.0):
-        print(piezo_plate_input.read())
-        led_pin.write(1)
-        punch()
+    if(piezo_plate_1_input.read() > 0.0):
+        print("Plate 1: " + str(piezo_plate_2_input.read()))
+        led_pin1.write(1)
+        #punch()
         time.sleep(0.1)
-        led_pin.write(0)
+        led_pin1.write(0)
+
+    if(piezo_plate_2_input.read() > 0.0):
+        print("Plate 2: " + str(piezo_plate_2_input.read()))
+        led_pin2.write(1)
+        #punch()
+        time.sleep(0.1)
+        led_pin2.write(0)
 
