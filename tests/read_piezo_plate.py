@@ -40,14 +40,15 @@ time.sleep(0.1)
 
 # Blink the LED 
 while True:
-    if(piezo_plate_1_input.read() > 0.0):
-        print("Plate 1: " + str(piezo_plate_2_input.read()))
+    print("Nomal: " + str(piezo_plate_1_input.read()))
+    if(piezo_plate_1_input.read() > 0.1 ):
+        print("Plate 1: " + str(piezo_plate_1_input.read()))
         led_pin1.write(1)
         ride1()
         time.sleep(0.1)
         led_pin1.write(0)
 
-    if(piezo_plate_2_input.read() > 0.0):
+    if(piezo_plate_2_input.read() > 0.4):
         print("Plate 2: " + str(piezo_plate_2_input.read()))
         led_pin2.write(1)
         ride2()

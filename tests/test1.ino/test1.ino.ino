@@ -20,10 +20,10 @@ void loop()
   int ppovalue = analogRead(piezoInput1);
   int pptvalue = analogRead(piezoInput2);
 
-  if(ppovalue>0){
-    digitalWrite(ledoutput1, HIGH);
-    delay(100);
+  if(ppovalue>0.001){
     digitalWrite(ledoutput1, LOW);
+    delay(100);
+    digitalWrite(ledoutput1, HIGH);
   }
 
   if(pptvalue>0){
