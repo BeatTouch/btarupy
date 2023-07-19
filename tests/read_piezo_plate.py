@@ -1,4 +1,5 @@
 import time
+import multiprocessing
 from pyfirmata import Arduino, INPUT, util
 from playsound import playsound
 
@@ -30,7 +31,7 @@ def ride1():
     print('playing r1de 1 sound')
 
 def ride2():
-    playsound('sounds/ride_2.ogg')
+    playsound('sounds/tom_m.ogg')
     print('playing ride 2 sound')
 
 
@@ -38,19 +39,27 @@ piezo_plate_1_input.read()
 piezo_plate_2_input.read()
 time.sleep(0.1)
 
-# Blink the LED 
-while True:
-    if(piezo_plate_1_input.read() > 0.0):
-        print("Plate 1: " + str(piezo_plate_2_input.read()))
+def plate1Input():
+    if(piezo_plate_1_input.read() > 0.3 ):
+        print("Plate 1: " + str(piezo_plate_1_input.read()))
         led_pin1.write(1)
         ride1()
         time.sleep(0.1)
         led_pin1.write(0)
 
-    if(piezo_plate_2_input.read() > 0.0):
+def plate2Input():
+    if(piezo_plate_2_input.read() > 0.3):
         print("Plate 2: " + str(piezo_plate_2_input.read()))
         led_pin2.write(1)
         ride2()
         time.sleep(0.1)
         led_pin2.write(0)
 
+
+if __name__ == '__main__':
+    while True:
+        p1 = multiprocessing.Process(name='p1', target=plate1Input)
+        p = multiprocessing.Process(name='p', target=plate2Input)
+
+        p1.start()
+        p.start()

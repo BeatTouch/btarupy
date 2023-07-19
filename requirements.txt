@@ -1,3 +1,4 @@
 pyfirmata
 playsound
+pydub
 pygobject
