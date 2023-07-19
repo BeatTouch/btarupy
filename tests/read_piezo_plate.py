@@ -27,7 +27,7 @@ piezo_plate_2_input.enable_reporting()
 #Play a sound function
 def ride1():
     playsound('sounds/ride_1.ogg')
-    print('playing r9de 1 sound')
+    print('playing r1de 1 sound')
 
 def ride2():
     playsound('sounds/ride_2.ogg')
@@ -38,7 +38,7 @@ piezo_plate_1_input.read()
 piezo_plate_2_input.read()
 time.sleep(0.1)
 
-# Blink the LED
+# Blink the LED 
 while True:
     if(piezo_plate_1_input.read() > 0.0):
         print("Plate 1: " + str(piezo_plate_2_input.read()))
