@@ -40,27 +40,26 @@ piezo_plate_2_input.read()
 time.sleep(0.1)
 
 def plate1Input():
-    while True:
-        if(piezo_plate_1_input.read() > 0.2 ):
-            print("Plate 1: " + str(piezo_plate_1_input.read()))
-            led_pin1.write(1)
-            ride1()
-            time.sleep(0.1)
-            led_pin1.write(0)
+    if(piezo_plate_1_input.read() > 0.3 ):
+        print("Plate 1: " + str(piezo_plate_1_input.read()))
+        led_pin1.write(1)
+        ride1()
+        time.sleep(0.1)
+        led_pin1.write(0)
 
 def plate2Input():
-    while True:
-        if(piezo_plate_2_input.read() > 0.4):
-            print("Plate 2: " + str(piezo_plate_2_input.read()))
-            led_pin2.write(1)
-            ride2()
-            time.sleep(0.1)
-            led_pin2.write(0)
+    if(piezo_plate_2_input.read() > 0.3):
+        print("Plate 2: " + str(piezo_plate_2_input.read()))
+        led_pin2.write(1)
+        ride2()
+        time.sleep(0.1)
+        led_pin2.write(0)
 
 
 if __name__ == '__main__':
-    p1 = multiprocessing.Process(name='p1', target=plate1Input)
-    p = multiprocessing.Process(name='p', target=plate2Input)
+    while True:
+        p1 = multiprocessing.Process(name='p1', target=plate1Input)
+        p = multiprocessing.Process(name='p', target=plate2Input)
 
-    p1.start()
-    p.start()
+        p1.start()
+        p.start()
