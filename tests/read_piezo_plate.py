@@ -40,18 +40,21 @@ piezo_plate_2_input.read()
 time.sleep(0.1)
 
 def plate1Input():
-    if(piezo_plate_1_input.read() > 0.3 ):
+    if(piezo_plate_1_input.read() > 0.2):
         print("Plate 1: " + str(piezo_plate_1_input.read()))
         led_pin1.write(1)
-        ride1()
+        
+        playsound('sounds/tom_m.ogg')
         time.sleep(0.1)
         led_pin1.write(0)
 
+
 def plate2Input():
-    if(piezo_plate_2_input.read() > 0.3):
+    if(piezo_plate_2_input.read() > 0.2):
         print("Plate 2: " + str(piezo_plate_2_input.read()))
         led_pin2.write(1)
-        ride2()
+        
+        playsound('sounds/rim.ogg')
         time.sleep(0.1)
         led_pin2.write(0)
 
@@ -63,3 +66,5 @@ if __name__ == '__main__':
 
         p1.start()
         p.start()
+
+        time.sleep(0.1)
