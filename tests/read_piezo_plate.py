@@ -35,22 +35,22 @@ piezo_plate_4_input.read()
 time.sleep(0.1)
 
 def plate1Input():
-    if(piezo_plate_1_input.read() > 0.2):
+    if(piezo_plate_1_input.read() >= 0.8):
         print("Plate 1: " + str(piezo_plate_1_input.read()))        
         playsound('sounds/crash_3.ogg')
 
 def plate2Input():
-    if(piezo_plate_2_input.read() > 0.2):
+    if(piezo_plate_2_input.read() >= 0.8):
         print("Plate 2: " + str(piezo_plate_2_input.read()))        
         playsound('sounds/hihat_closed.ogg')
 
 def plate3Input():
-    if(piezo_plate_3_input.read() > 0.2):
+    if(piezo_plate_3_input.read() >= 0.8):
         print("Plate 3: " + str(piezo_plate_3_input.read()))
         playsound('sounds/kick.ogg')
 
 def plate4Input():
-    if(piezo_plate_4_input.read() > 0.2):
+    if(piezo_plate_4_input.read() >= 0.8):
         print("Plate 4: " + str(piezo_plate_4_input.read()))       
         playsound('sounds/tom_sh.ogg')
 
