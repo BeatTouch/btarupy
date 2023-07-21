@@ -12,57 +12,58 @@ print("Communication Successfully started")
 it = util.Iterator(board)  
 it.start()  
 
-# Set up the pin modes
-led_pin1 = board.digital[8]
-led_pin2 = board.digital[11]
-
-piezo_plate_1_input = board.get_pin('a:1:i') 
-piezo_plate_2_input = board.get_pin('a:4:i') 
+piezo_plate_1_input = board.get_pin('a:1:i')
+piezo_plate_2_input = board.get_pin('a:2:i')
+piezo_plate_3_input = board.get_pin('a:3:i')
+piezo_plate_4_input = board.get_pin('a:4:i') 
 
 piezo_plate_1_input.mode = INPUT
 piezo_plate_2_input.mode = INPUT
+piezo_plate_3_input.mode = INPUT
+piezo_plate_4_input.mode = INPUT
 
 piezo_plate_1_input.enable_reporting()
 piezo_plate_2_input.enable_reporting()
-
-#Play a sound function
-def ride1():
-    playsound('sounds/ride_1.ogg')
-    print('playing r1de 1 sound')
-
-def ride2():
-    playsound('sounds/tom_m.ogg')
-    playsound('sounds/tom_m.ogg')
-    print('playing ride 2 sound')
-
+piezo_plate_3_input.enable_reporting()
+piezo_plate_4_input.enable_reporting()
 
 piezo_plate_1_input.read()
 piezo_plate_2_input.read()
+piezo_plate_3_input.read()
+piezo_plate_4_input.read()
+
 time.sleep(0.1)
 
-# Blink the LED 
-while True:
-    print("Plate 1 Normal: " + str(piezo_plate_1_input.read()))
-    print("Plate 2 Normal: " + str(piezo_plate_2_input.read()))
+def plate1Input():
     if(piezo_plate_1_input.read() > 0.2):
-        print("Plate 1: " + str(piezo_plate_1_input.read()))
-        led_pin1.write(1)
-        #ride1()
-        time.sleep(0.1)
-        led_pin1.write(0)
+        print("Plate 1: " + str(piezo_plate_1_input.read()))        
+        playsound('sounds/crash_3.ogg')
 
-    if(piezo_plate_2_input.read() > 0.0):
-        print("Plate 2: " + str(piezo_plate_2_input.read()))
-        led_pin2.write(1)
-        #ride2()
-        time.sleep(0.1)
-        led_pin2.write(0)
+def plate2Input():
+    if(piezo_plate_2_input.read() > 0.2):
+        print("Plate 2: " + str(piezo_plate_2_input.read()))        
+        playsound('sounds/hihat_closed.ogg')
 
+def plate3Input():
+    if(piezo_plate_3_input.read() > 0.2):
+        print("Plate 3: " + str(piezo_plate_3_input.read()))
+        playsound('sounds/kick.ogg')
+
+def plate4Input():
+    if(piezo_plate_4_input.read() > 0.2):
+        print("Plate 4: " + str(piezo_plate_4_input.read()))       
+        playsound('sounds/tom_sh.ogg')
 
 if __name__ == '__main__':
     while True:
         p1 = multiprocessing.Process(name='p1', target=plate1Input)
-        p = multiprocessing.Process(name='p', target=plate2Input)
+        p2 = multiprocessing.Process(name='p2', target=plate2Input)
+        p3 = multiprocessing.Process(name='p3', target=plate3Input)
+        p4 = multiprocessing.Process(name='p4', target=plate4Input)
 
         p1.start()
-        p.start()
+        p2.start()
+        p3.start()
+        p4.start()
+
+        time.sleep(0.1)
