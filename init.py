@@ -1,5 +1,6 @@
 import time
-from pyfirmata import Arduino
+import multiprocessing
+from pyfirmata import Arduino, INPUT, util
 from playsound import playsound
 
 # Define the port where Arduino is connected
@@ -9,21 +10,57 @@ port = '/dev/ttyACM0'
 board = Arduino(port)
 print("Communication Successfully started")
 
-# Set up the pin modes
-led_pin = board.digital[9]
+it = util.Iterator(board)  
+it.start()  
 
-#Play a sound function
-def punch():
-    playsound('sounds/orchestral-cymbals.mp3')
-    print('playing punch sound')
+piezo_plate_1_input = board.get_pin('a:1:i')
+piezo_plate_2_input = board.get_pin('a:2:i')
+piezo_plate_3_input = board.get_pin('a:3:i')
+piezo_plate_4_input = board.get_pin('a:4:i') 
 
-# Blink the LED
-while True:
-    led_pin.write(1)  # Turn the LED on
-    board.pass_time(1) # Delay for 1 second
-    print("LED ON...")
-    #punch()
+piezo_plate_1_input.mode = INPUT
+piezo_plate_2_input.mode = INPUT
+piezo_plate_3_input.mode = INPUT
+piezo_plate_4_input.mode = INPUT
 
-    led_pin.write(0)  # Turn the LED off
-    board.pass_time(1) # Delay for 1 second
-    print("LED OFF...")
+piezo_plate_1_input.enable_reporting()
+piezo_plate_2_input.enable_reporting()
+piezo_plate_3_input.enable_reporting()
+piezo_plate_4_input.enable_reporting()
+
+piezo_plate_1_input.read()
+piezo_plate_2_input.read()
+piezo_plate_3_input.read()
+piezo_plate_4_input.read()
+
+time.sleep(0.1)
+
+def plate1Input():
+    if(piezo_plate_1_input.read() >= 0.8):    
+        playsound('sounds/crash_3.ogg')
+
+def plate2Input():
+    if(piezo_plate_2_input.read() >= 0.8):
+        playsound('sounds/hihat_closed.ogg')
+
+def plate3Input():
+    if(piezo_plate_3_input.read() >= 0.8):
+        playsound('sounds/kick.ogg')
+
+def plate4Input():
+    if(piezo_plate_4_input.read() >= 0.8):
+        playsound('sounds/tom_sh.ogg')
+
+if __name__ == '__main__':
+    while True:
+        p1 = multiprocessing.Process(name='p1', target=plate1Input)
+        p2 = multiprocessing.Process(name='p2', target=plate2Input)
+        p3 = multiprocessing.Process(name='p3', target=plate3Input)
+        p4 = multiprocessing.Process(name='p4', target=plate4Input)
+
+        p1.start()
+        p2.start()
+        p3.start()
+        p4.start()
+
+        time.sleep(0.1)
